@@ -1,0 +1,41 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# Bandit is a security linter designed to find common security issues in Python code.
+# This action will run Bandit on your codebase.
+# The results of the scan will be found under the Security tab of your repository.
+
+# https://github.com/marketplace/actions/bandit-scan is ISC licensed, by abirismyname
+# https://pypi.org/project/bandit/ is Apache v2.0 licensed, by PyCQA
+
+name: Bandit
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ "main" ]
+  
+
+jobs:
+  bandit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      
+      - name: Install Bandit
+        run: pip install bandit
+      
+      - name: Run Bandit Scan
+        run: bandit -r . -ll
+
+
+   
+
